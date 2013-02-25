@@ -12,8 +12,6 @@
 #
 ##############################################################################
 """Setup for zope.preference package
-
-$Id$
 """
 import os
 from setuptools import setup, find_packages
@@ -22,7 +20,7 @@ def read(*rnames):
     return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
 
 setup(name = 'zope.preference',
-      version='3.8.1dev',
+      version='4.0.0a1.dev',
       author='Zope Corporation and Contributors',
       author_email='zope-dev@zope.org',
       description='User Preferences Framework',
@@ -41,6 +39,12 @@ setup(name = 'zope.preference',
           'Intended Audience :: Developers',
           'License :: OSI Approved :: Zope Public License',
           'Programming Language :: Python',
+          'Programming Language :: Python :: 2',
+          'Programming Language :: Python :: 2.6',
+          'Programming Language :: Python :: 2.7',
+          'Programming Language :: Python :: 3',
+          'Programming Language :: Python :: 3.3',
+          'Programming Language :: Python :: Implementation :: CPython',
           'Natural Language :: English',
           'Operating System :: OS Independent',
           'Topic :: Internet :: WWW/HTTP',
@@ -51,17 +55,24 @@ setup(name = 'zope.preference',
       package_dir = {'': 'src'},
       namespace_packages=['zope'],
       extras_require=dict(test=[
-          'zope.app.testing',
+          'zope.site',
+          'zope.testing',
           ]),
-      install_requires = ['setuptools',
-                          'ZODB3',
-                          'zope.annotation',
-                          'zope.component >= 3.8.0',
-                          'zope.container',
-                          'zope.schema',
-                          'zope.security',
-                          'zope.traversing',
-                          ],
+      install_requires = [
+        'setuptools',
+        'BTrees',
+        'zope.annotation',
+        'zope.component >= 3.8.0',
+        'zope.container',
+        'zope.schema',
+        'zope.security',
+        'zope.traversing',
+        ],
+      tests_require = [
+          'zope.site',
+          'zope.testing',
+          ],
+      test_suite = 'zope.preference.tests.test_suite',
       include_package_data = True,
       zip_safe = False,
       )

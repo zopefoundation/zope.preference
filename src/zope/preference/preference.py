@@ -37,12 +37,12 @@ from zope.preference.interfaces import IDefaultPreferenceProvider
 pref_key = 'zope.app.user.UserPreferences'
 
 
+@zope.interface.implementer(IPreferenceGroup, IReadContainer)
 class PreferenceGroup(Location):
     """A feature-rich ``IPreferenceGroup`` implementation.
 
     This class implements the
     """
-    zope.interface.implements(IPreferenceGroup, IReadContainer)
 
     # Declare attributes here, so that they are always available.
     __id__ = ''
@@ -75,7 +75,8 @@ class PreferenceGroup(Location):
 
     @property
     def __parent__(self):
-        return self.__parent or zope.component.hooks.getSite()
+        return self.__parent if self.__parent is not None \
+            else zope.component.hooks.getSite()
 
     def __bind__(self, parent):
         clone = self.__class__.__new__(self.__class__)

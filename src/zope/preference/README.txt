@@ -11,16 +11,6 @@ maintain the data and UI. The `preference` package
 eases this pain by providing a generic user preferences framework that uses
 schemas to categorize and describe the preferences.
 
-We also have to do some additional setup beforehand:
-
-  >>> from zope.app.testing import setup
-
-  >>> import zope.component.hooks
-  >>> zope.component.hooks.setHooks()
-  >>> setup.setUpTraversal()
-  >>> setup.setUpSiteManagerLookup()
-
-
 Preference Groups
 ------------------
 
@@ -103,8 +93,8 @@ We also need an IAnnotations adapter for principals, so we can store the
 settings:
 
   >>> from zope.annotation.interfaces import IAnnotations
-  >>> class PrincipalAnnotations(dict):
-  ...     zope.interface.implements(IAnnotations)
+  >>> @zope.interface.implementer(IAnnotations)
+  ... class PrincipalAnnotations(dict):
   ...     data = {}
   ...     def __new__(class_, principal, context):
   ...         try:
@@ -222,16 +212,18 @@ package provides a module
   >>> from zope.preference import default
 
 that implements a default preferences provider that can be added as a unnamed
-utility for each site. So the first step is to create a site:
+utility for each site.
 
-  >>> root = setup.buildSampleFolderTree()
-  >>> rsm = setup.createSiteManager(root, True)
+  >>> root
+  <zope.site.folder.Folder ...>
+  >>> rsm
+  <LocalSiteManager ++etc++site>
 
 Now we can register the default preference provider with the root site:
 
-  >>> provider = setup.addUtility(rsm, '',
-  ...                             interfaces.IDefaultPreferenceProvider,
-  ...                             default.DefaultPreferenceProvider())
+  >>> provider = addUtility(
+  ...     rsm, default.DefaultPreferenceProvider(),
+  ...     interfaces.IDefaultPreferenceProvider)
 
 So before we set an explicit default value for a preference, the schema field
 default is used:
@@ -253,13 +245,17 @@ The default preference providers also implicitly acquire default values from
 parent sites. So if we make `folder1` a site and set it as the active site
 
   >>> folder1 = root['folder1']
-  >>> sm1 = setup.createSiteManager(folder1, True)
+
+  >>> from zope.site.site import LocalSiteManager
+  >>> sm1 = LocalSiteManager(folder1)
+  >>> folder1.setSiteManager(sm1)
+  >>> zope.component.hooks.setSite(folder1)
 
 and add a default provider there,
 
-  >>> provider1 = setup.addUtility(sm1, '',
-  ...                              interfaces.IDefaultPreferenceProvider,
-  ...                              default.DefaultPreferenceProvider())
+  >>> provider1 = addUtility(
+  ...     sm1, default.DefaultPreferenceProvider(),
+  ...     interfaces.IDefaultPreferenceProvider)
 
 then we still get the root's default values, because we have not defined any
 in the higher default provider:

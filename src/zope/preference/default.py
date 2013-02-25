@@ -27,8 +27,8 @@ import zope.component
 import zope.interface
 
 
+@zope.interface.implementer(interfaces.IDefaultPreferenceProvider)
 class DefaultPreferenceProvider(persistent.Persistent, Contained):
-    zope.interface.implements(interfaces.IDefaultPreferenceProvider)
 
     def __init__(self):
         self.data = OOBTree()
