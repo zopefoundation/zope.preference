@@ -1,15 +1,19 @@
-=======
-CHANGES
-=======
+=========
+ CHANGES
+=========
 
-4.0.0a2 (unreleased)
---------------------
+4.0.0 (unreleased)
+==================
 
-- Nothing changed yet.
+- Add support for Python 3.4, 3.5 and 3.6.
+
+- Add support for PyPy.
+
+- Drop support for Python 2.6.
 
 
 4.0.0a1 (2013-02-24)
---------------------
+====================
 
 - Added support for Python 3.3.
 
@@ -24,7 +28,7 @@ CHANGES
 
 
 3.8.0 (2010-06-12)
-------------------
+==================
 
 - Split out from `zope.app.preference`.
 

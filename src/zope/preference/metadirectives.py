@@ -13,7 +13,6 @@
 ##############################################################################
 """``apidoc:preferencesgroup`` ZCML directive interface
 
-$Id$
 """
 from zope.interface import Interface
 from zope.configuration import fields

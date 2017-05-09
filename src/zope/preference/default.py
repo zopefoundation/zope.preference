@@ -12,8 +12,6 @@
 #
 ##############################################################################
 """Default Preferences Provider
-
-$Id$
 """
 from BTrees.OOBTree import OOBTree
 from zope.container.contained import Contained
@@ -22,7 +20,6 @@ from zope.preference import preference, interfaces
 from zope.security.checker import defineChecker
 from zope.traversing.interfaces import IContainmentRoot
 import persistent
-import zope.component
 import zope.component
 import zope.interface
 

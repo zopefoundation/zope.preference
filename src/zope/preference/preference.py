@@ -13,7 +13,6 @@
 ##############################################################################
 """User Preferences System
 
-$Id$
 """
 __docformat__ = "reStructuredText"
 from BTrees.OOBTree import OOBTree
@@ -118,11 +117,11 @@ class PreferenceGroup(Location):
 
     def __iter__(self):
         """See zope.container.interfaces.IReadContainer"""
-        return self.values().__iter__()
+        return iter(self.values())
 
     def values(self):
         """See zope.container.interfaces.IReadContainer"""
-        return [group for id, group in self.items()]
+        return [group for _id, group in self.items()]
 
     def __len__(self):
         """See zope.container.interfaces.IReadContainer"""
