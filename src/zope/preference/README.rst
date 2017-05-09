@@ -1,6 +1,6 @@
-================
-User Preferences
-================
+==================
+ User Preferences
+==================
 
 Implementing user preferences is usually a painful task, since it requires a
 lot of custom coding and constantly changing preferences makes it hard to
@@ -12,7 +12,7 @@ eases this pain by providing a generic user preferences framework that uses
 schemas to categorize and describe the preferences.
 
 Preference Groups
-------------------
+=================
 
 Preferences are grouped in preference groups and the preferences inside a
 group are specified via the preferences group schema:
@@ -67,7 +67,7 @@ So let's ask the preference group for the `skin` setting:
   >>> settings.skin #doctest:+ELLIPSIS
   Traceback (most recent call last):
   ...
-  NoInteraction
+  zope.security.interfaces.NoInteraction
 
 
 So why did the lookup fail? Because we have not specified a principal yet, for
@@ -132,7 +132,7 @@ assignment:
 
 
 Preference Group Trees
-----------------------
+======================
 
 The preferences would not be very powerful, if you could create a full
 preferences. So let's create a sub-group for our ZMI user settings, where we
@@ -166,8 +166,12 @@ item on the parent group ...
   Traceback (most recent call last):
   ...
   AttributeError: 'Folder' is not a preference or sub-group.
+  >>> settings['Folder']
+  Traceback (most recent call last):
+  ...
+  KeyError: 'Folder'
 
-... but not before we register the groups as utilities:
+but not before we register the groups as utilities:
 
   >>> from zope.preference import interfaces
   >>> from zope.component import provideUtility
@@ -184,6 +188,10 @@ If we now try to lookup the sub-group again, we should be successful:
 
   >>> settings['Folder'] #doctest:+ELLIPSIS
   <zope.preference.preference.PreferenceGroup object at ...>
+  >>> 'Folder' in settings
+  True
+  >>> list(settings)
+  [<zope.preference.preference.PreferenceGroup object at ...>]
 
 While the registry of the preference groups is flat, the careful naming of the
 ids allows us to have a tree of preferences. Note that this pattern is very
@@ -196,14 +204,25 @@ to Python packages. They basically are just a higher level grouping concept
 that is used by the UI to better organize the preferences. A preference group
 can be converted to a category by simply providing an additional interface:
 
-  >>> zope.interface.alsoProvides(settings, interfaces.IPreferenceCategory)
+  >>> zope.interface.alsoProvides(folderSettings, interfaces.IPreferenceCategory)
 
-  >>> interfaces.IPreferenceCategory.providedBy(settings)
+  >>> interfaces.IPreferenceCategory.providedBy(folderSettings)
   True
 
+Preference group objects can also hold arbitrary attributes, but since
+they're not persistent this must be used with care:
+
+  >>> settings.not_in_schema = 1
+  >>> settings.not_in_schema
+  1
+  >>> del settings.not_in_schema
+  >>> settings.not_in_schema
+  Traceback (most recent call last):
+  ...
+  AttributeError: 'not_in_schema' is not a preference or sub-group.
 
 Default Preferences
--------------------
+===================
 
 It sometimes desirable to define default settings on a site-by-site basis,
 instead of just using the default value from the schema. The preferences
@@ -240,6 +259,12 @@ then the default of the setting changes:
 
   >>> settings.Folder.sortedBy
   'size'
+
+Because the ``ZMISettings.Folder`` was declared as a preference
+category, the default implementation is too:
+
+  >>> interfaces.IPreferenceCategory.providedBy(defaultFolder)
+  True
 
 The default preference providers also implicitly acquire default values from
 parent sites. So if we make `folder1` a site and set it as the active site
@@ -304,9 +329,25 @@ default value:
   >>> settings.Folder.sortedBy
   'size'
 
+Just as with regular preference groups, the default preference groups
+are arranged in a matching hierarchy:
+
+  >>> defaultSettings = provider.getDefaultPreferenceGroup('ZMISettings')
+  >>> defaultSettings.get('Folder')
+  <zope.preference.default.DefaultPreferenceGroup object at ...>
+  >>> defaultSettings.Folder
+  <zope.preference.default.DefaultPreferenceGroup object at ...>
+
+They also report useful AttributeErrors for bad accesses:
+
+  >>> defaultSettings.not_in_schema
+  Traceback (most recent call last):
+  ...
+  AttributeError: 'not_in_schema' is not a preference or sub-group.
+
 
 Creating Preference Groups Using ZCML
--------------------------------------
+=====================================
 
 If you are using the user preference system in Zope 3, you will not have to
 manually setup the preference groups as we did above (of course). We will use
@@ -393,7 +434,7 @@ And the tree can built again by carefully constructing the id:
 
 
 Simple Python-Level Access
---------------------------
+==========================
 
 If a site is set, getting the user preferences is very simple:
 
@@ -415,7 +456,7 @@ so that you can adapt any location to the user preferences:
 
 
 Traversal
----------
+=========
 
 Okay, so all these objects are nice, but they do not make it any easier to
 access the preferences in page templates. Thus, a special traversal namespace
@@ -439,7 +480,7 @@ We can now access the preferences as follows:
 
 
 Security
---------
+========
 
 You might already wonder under which permissions the preferences are
 available. They are actually available publicly (`CheckerPublic`), but that

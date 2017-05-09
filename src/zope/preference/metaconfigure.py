@@ -13,7 +13,6 @@
 ##############################################################################
 """This module handles the 'preference' namespace directives.
 
-$Id$
 """
 __docformat__ = 'restructuredtext'
 

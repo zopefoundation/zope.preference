@@ -5,6 +5,12 @@
     i18n_domain="zope"
     >
 
+  <include package="zope.component" file="meta.zcml" />
+  <include package="." file="meta.zcml" />
+  <include package="zope.security" file="meta.zcml" />
+
+  <include package="zope.security" />
+
   <view
       name="preferences"
       for="*"
@@ -28,7 +34,6 @@
 
   <!-- Root preference group -->
   <preferenceGroup
-      id=""
       title="User Preferences"
       />
 
