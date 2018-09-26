@@ -234,9 +234,11 @@ that implements a default preferences provider that can be added as a unnamed
 utility for each site.
 
   >>> root
-  <zope.site.folder.Folder ...>
+  <...Folder ...>
   >>> rsm
-  <LocalSiteManager ++etc++site>
+  <...LocalSiteManager ...>
+  >>> rsm.__name__
+  '++etc++site'
 
 Now we can register the default preference provider with the root site:
 

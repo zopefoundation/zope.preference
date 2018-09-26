@@ -73,8 +73,7 @@ def setUp(test):
     rsm = LocalSiteManager(root)
     test.globs['rsm'] = rsm
     root.setSiteManager(rsm)
-    from zope.site.hooks import setSite
-    setSite(root)
+    zope.component.hooks.setSite(root)
 
     test.globs['addUtility'] = addUtility
     zope.testing.module.setUp(test, 'zope.preference.README')
