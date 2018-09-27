@@ -8,7 +8,7 @@
 - Support newer zope.configuration and persistent. See `issue 2
   <https://github.com/zopefoundation/zope.preference/issues/2>`_.
 
-- Add support for Python 3.7.
+- Add support for Python 3.7 and PyPy3.
 
 - Drop support for Python 3.3.
 
