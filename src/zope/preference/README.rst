@@ -224,19 +224,25 @@ they're not persistent this must be used with care:
 Default Preferences
 ===================
 
-It sometimes desirable to define default settings on a site-by-site basis,
-instead of just using the default value from the schema. The preferences
-package provides a module
+It is sometimes desirable to define default settings on a site-by-site
+basis, instead of just using the default value from the schema. The
+preferences package provides a module that implements a default
+preferences provider that can be added as a unnamed utility for each
+site:
 
   >>> from zope.preference import default
 
-that implements a default preferences provider that can be added as a unnamed
-utility for each site.
+We'll begin by creating a new root site:
 
-  >>> root
-  <zope.site.folder.Folder ...>
-  >>> rsm
-  <LocalSiteManager ++etc++site>
+  >>> from zope.site.folder import rootFolder
+  >>> root = rootFolder()
+  >>> from zope.site.site import LocalSiteManager
+  >>> rsm = LocalSiteManager(root)
+  >>> root.setSiteManager(rsm)
+
+And we'll make the new site the current site:
+
+  >>> zope.component.hooks.setSite(root)
 
 Now we can register the default preference provider with the root site:
 
@@ -266,9 +272,12 @@ category, the default implementation is too:
   >>> interfaces.IPreferenceCategory.providedBy(defaultFolder)
   True
 
-The default preference providers also implicitly acquire default values from
-parent sites. So if we make `folder1` a site and set it as the active site
+The default preference providers also implicitly acquire default
+values from parent sites. So if we add a new child folder called
+``folder1``, make it a site and set it as the active site:
 
+  >>> from zope.site.folder import Folder
+  >>> root[u'folder1'] = Folder()
   >>> folder1 = root['folder1']
 
   >>> from zope.site.site import LocalSiteManager

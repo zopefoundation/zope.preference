@@ -16,13 +16,19 @@
 """
 from zope.interface import Interface
 from zope.configuration import fields
+from zope.schema import DottedName
 
+class OptionalDottedName(DottedName):
+
+    def _validate(self, value):
+        if value:
+            super(OptionalDottedName, self)._validate(value)
 
 class IPreferenceGroupDirective(Interface):
     """Register a preference group."""
 
     # The id is not required, since the root group has an empty id.
-    id = fields.PythonIdentifier(
+    id = OptionalDottedName(
         title=u"Id",
         description=u"""
             Id of the preference group used to access the group. The id should
