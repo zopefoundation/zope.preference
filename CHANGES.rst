@@ -2,7 +2,7 @@
  CHANGES
 =========
 
-4.1.0 (unreleased)
+4.1.0 (2018-09-27)
 ==================
 
 - Support newer zope.configuration and persistent. See `issue 2
