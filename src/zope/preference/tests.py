@@ -62,18 +62,8 @@ def setUp(test):
     zope.component.provideAdapter(SiteManagerAdapter, (Interface,),
                                   IComponentLookup)
 
-    # Folder Structure
-    from zope.site.folder import Folder, rootFolder
-    root = rootFolder()
-    test.globs['root'] = root
-    root[u'folder1'] = Folder()
-
-    # MAke root a site.
-    from zope.site.site import LocalSiteManager
-    rsm = LocalSiteManager(root)
-    test.globs['rsm'] = rsm
-    root.setSiteManager(rsm)
-    zope.component.hooks.setSite(root)
+    # Creating a root folder and making it current is
+    # done in the doctest.
 
     test.globs['addUtility'] = addUtility
     zope.testing.module.setUp(test, 'zope.preference.README')
