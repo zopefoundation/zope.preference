@@ -57,7 +57,7 @@ def setUp(test):
 
     # ISiteManager lookup
     from zope.site.site import SiteManagerAdapter
-    from zope.component.interfaces import IComponentLookup
+    from zope.interface.interfaces import IComponentLookup
     from zope.interface import Interface
     zope.component.provideAdapter(SiteManagerAdapter, (Interface,),
                                   IComponentLookup)
