@@ -95,9 +95,9 @@ class PreferenceGroup(Location):
         utilities = zope.component.getUtilitiesFor(IPreferenceGroup)
         return [(id[cutoff:], group.__bind__(self))
                 for id, group in utilities
-                if id != self.__id__ and \
-                   id.startswith(self.__id__) and \
-                   id[cutoff:].find('.') == -1]
+                if (id != self.__id__ and
+                    id.startswith(self.__id__) and
+                    id[cutoff:].find('.') == -1)]
 
     def __getitem__(self, key):
         """See zope.container.interfaces.IReadContainer"""
@@ -142,7 +142,7 @@ class PreferenceGroup(Location):
                 provider = zope.component.queryUtility(
                     IDefaultPreferenceProvider,
                     context=self
-                    )
+                )
                 if provider is None:
                     return self.__schema__[key].default
                 defaultGroup = provider.getDefaultPreferenceGroup(self.__id__)
@@ -163,7 +163,7 @@ class PreferenceGroup(Location):
             self.__dict__[key] = value
             # If the schema changed, we really need to change the security
             # checker as well.
-            if key is '__schema__':
+            if key == '__schema__':
                 checker = PreferenceGroupChecker(self)
                 self.__dict__['__Security_checker__'] = checker
 
@@ -180,7 +180,7 @@ class PreferenceGroup(Location):
         ann = zope.component.getMultiAdapter((principal, self), IAnnotations)
 
         # If no preferences exist, create the root preferences object.
-        if  ann.get(pref_key) is None:
+        if ann.get(pref_key) is None:
             ann[pref_key] = OOBTree()
         prefs = ann[pref_key]
 

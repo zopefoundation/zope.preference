@@ -34,6 +34,7 @@ checker = renormalizing.RENormalizing([
     (re.compile('u(".*?")'), r"\1"),
 ])
 
+
 def addUtility(sitemanager, utility, iface=None, name='', suffix=''):
     folder_name = (name or (iface.__name__ + 'Utility')) + suffix
     default = sitemanager['default']
@@ -41,6 +42,7 @@ def addUtility(sitemanager, utility, iface=None, name='', suffix=''):
     utility = default[folder_name]
     sitemanager.registerUtility(utility, iface, name)
     return utility
+
 
 def setUp(test):
     zope.component.testing.setUp(test)
