@@ -49,7 +49,7 @@ class PreferenceGroup(Location):
     __title__ = None
     __description__ = None
 
-    def __init__(self, id, schema=None, title=u'', description=u'',
+    def __init__(self, id, schema=None, title='', description='',
                  isCategory=False):
         self.__id__ = id
         self.__schema__ = schema
@@ -234,7 +234,7 @@ def UserPreferences(context=None):
     return rootGroup
 
 
-class preferencesNamespace(object):
+class preferencesNamespace:
     """Used to traverse to the root preferences group."""
 
     def __init__(self, ob, request=None):

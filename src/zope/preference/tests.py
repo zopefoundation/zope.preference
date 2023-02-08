@@ -14,7 +14,6 @@
 """Tests for the Preferences System
 """
 import doctest
-import re
 import unittest
 
 import zope.component.hooks
@@ -22,17 +21,9 @@ import zope.component.testing
 import zope.testing.module
 from zope.interface.verify import verifyObject
 from zope.testing import cleanup
-from zope.testing import renormalizing
 
 from zope import component
 from zope.preference.interfaces import IPreferenceGroup
-
-
-checker = renormalizing.RENormalizing([
-    # Python 3 unicode removed the "u".
-    (re.compile("u('.*?')"), r"\1"),
-    (re.compile('u(".*?")'), r"\1"),
-])
 
 
 def addUtility(sitemanager, utility, iface=None, name='', suffix=''):
@@ -107,8 +98,7 @@ def test_suite():
         setUp=setUp, tearDown=tearDown,
         optionflags=(doctest.NORMALIZE_WHITESPACE
                      | doctest.ELLIPSIS
-                     | doctest.IGNORE_EXCEPTION_DETAIL),
-        checker=checker)
+                     | doctest.IGNORE_EXCEPTION_DETAIL))
     return unittest.TestSuite((
         readme,
         unittest.defaultTestLoader.loadTestsFromName(__name__),

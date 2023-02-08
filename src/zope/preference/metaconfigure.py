@@ -23,7 +23,7 @@ from zope.preference.preference import PreferenceGroup
 
 
 def preferenceGroup(_context, id=None, schema=None,
-                    title=u'', description=u'', category=False):
+                    title='', description='', category=False):
     if id is None:
         id = ''
     group = PreferenceGroup(id, schema, title, description, category)

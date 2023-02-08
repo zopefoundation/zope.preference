@@ -34,7 +34,7 @@ tests_require = [
 setup(name='zope.preference',
       version='5.0.dev0',
       author='Zope Foundation and Contributors',
-      author_email='zope-dev@zope.org',
+      author_email='zope-dev@zope.dev',
       description='User Preferences Framework',
       long_description=(
           read('README.rst')
@@ -69,6 +69,7 @@ setup(name='zope.preference',
       packages=find_packages('src'),
       package_dir={'': 'src'},
       namespace_packages=['zope'],
+      python_requires='>=3.7',
       extras_require={
           'test': tests_require,
           'zcml': [

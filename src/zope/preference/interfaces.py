@@ -38,23 +38,23 @@ class IPreferenceGroup(ILocation):
     """
 
     __id__ = zope.schema.TextLine(
-        title=u"Id",
-        description=u"The id of the group.",
+        title="Id",
+        description="The id of the group.",
         required=True)
 
     __schema__ = zope.schema.InterfaceField(
-        title=u"Schema",
-        description=u"Schema describing the preferences of the group.",
+        title="Schema",
+        description="Schema describing the preferences of the group.",
         required=False)
 
     __title__ = MessageID(
-        title=u"Title",
-        description=u"The title of the group used in the UI.",
+        title="Title",
+        description="The title of the group used in the UI.",
         required=True)
 
     __description__ = MessageID(
-        title=u"Description",
-        description=u"The description of the group used in the UI.",
+        title="Description",
+        description="The description of the group used in the UI.",
         required=False)
 
 
@@ -81,5 +81,5 @@ class IDefaultPreferenceProvider(zope.interface.Interface):
     """
 
     preferences = zope.schema.Field(
-        title=u"Default Preferences Root",
-        description=u"Link to the default preferences")
+        title="Default Preferences Root",
+        description="Link to the default preferences")
