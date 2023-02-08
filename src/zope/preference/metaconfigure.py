@@ -17,6 +17,7 @@
 __docformat__ = 'restructuredtext'
 
 from zope.component.zcml import utility
+
 from zope.preference.interfaces import IPreferenceGroup
 from zope.preference.preference import PreferenceGroup
 

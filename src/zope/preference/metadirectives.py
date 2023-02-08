@@ -14,8 +14,8 @@
 """``apidoc:preferencesgroup`` ZCML directive interface
 
 """
-from zope.interface import Interface
 from zope.configuration import fields
+from zope.interface import Interface
 from zope.schema import DottedName
 
 

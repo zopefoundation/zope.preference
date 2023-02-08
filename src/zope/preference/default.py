@@ -13,15 +13,17 @@
 ##############################################################################
 """Default Preferences Provider
 """
-from BTrees.OOBTree import OOBTree
-from zope.container.contained import Contained
-from zope.location import locate
-from zope.preference import preference, interfaces
-from zope.security.checker import defineChecker
-from zope.traversing.interfaces import IContainmentRoot
 import persistent
 import zope.component
 import zope.interface
+from BTrees.OOBTree import OOBTree
+from zope.container.contained import Contained
+from zope.location import locate
+from zope.security.checker import defineChecker
+from zope.traversing.interfaces import IContainmentRoot
+
+from zope.preference import interfaces
+from zope.preference import preference
 
 
 @zope.interface.implementer(interfaces.IDefaultPreferenceProvider)
