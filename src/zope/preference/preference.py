@@ -15,23 +15,23 @@
 
 """
 __docformat__ = "reStructuredText"
-from BTrees.OOBTree import OOBTree
-
-import zope.interface
 import zope.component
+import zope.component.hooks
+import zope.interface
+from BTrees.OOBTree import OOBTree
+from zope.annotation.interfaces import IAnnotations
+from zope.container.interfaces import IReadContainer
+from zope.location import Location
 from zope.schema import getFields
-from zope.security.checker import CheckerPublic, Checker
+from zope.security.checker import Checker
+from zope.security.checker import CheckerPublic
 from zope.security.management import getInteraction
 from zope.traversing.interfaces import IContainmentRoot
-from zope.location import Location
-from zope.annotation.interfaces import IAnnotations
 
-import zope.component.hooks
-from zope.container.interfaces import IReadContainer
-
-from zope.preference.interfaces import IPreferenceGroup
-from zope.preference.interfaces import IPreferenceCategory
 from zope.preference.interfaces import IDefaultPreferenceProvider
+from zope.preference.interfaces import IPreferenceCategory
+from zope.preference.interfaces import IPreferenceGroup
+
 
 pref_key = 'zope.app.user.UserPreferences'
 
@@ -49,7 +49,7 @@ class PreferenceGroup(Location):
     __title__ = None
     __description__ = None
 
-    def __init__(self, id, schema=None, title=u'', description=u'',
+    def __init__(self, id, schema=None, title='', description='',
                  isCategory=False):
         self.__id__ = id
         self.__schema__ = schema
@@ -234,7 +234,7 @@ def UserPreferences(context=None):
     return rootGroup
 
 
-class preferencesNamespace(object):
+class preferencesNamespace:
     """Used to traverse to the root preferences group."""
 
     def __init__(self, ob, request=None):

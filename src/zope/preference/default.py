@@ -13,15 +13,17 @@
 ##############################################################################
 """Default Preferences Provider
 """
-from BTrees.OOBTree import OOBTree
-from zope.container.contained import Contained
-from zope.location import locate
-from zope.preference import preference, interfaces
-from zope.security.checker import defineChecker
-from zope.traversing.interfaces import IContainmentRoot
 import persistent
 import zope.component
 import zope.interface
+from BTrees.OOBTree import OOBTree
+from zope.container.contained import Contained
+from zope.location import locate
+from zope.security.checker import defineChecker
+from zope.traversing.interfaces import IContainmentRoot
+
+from zope.preference import interfaces
+from zope.preference import preference
 
 
 @zope.interface.implementer(interfaces.IDefaultPreferenceProvider)
@@ -50,7 +52,7 @@ class DefaultPreferenceGroup(preference.PreferenceGroup):
 
     def __init__(self, group, provider):
         self.provider = provider
-        super(DefaultPreferenceGroup, self).__init__(
+        super().__init__(
             group.__id__, group.__schema__,
             group.__title__, group.__description__)
 
@@ -60,7 +62,7 @@ class DefaultPreferenceGroup(preference.PreferenceGroup):
             zope.interface.alsoProvides(self, interfaces.IPreferenceCategory)
 
     def get(self, key, default=None):
-        group = super(DefaultPreferenceGroup, self).get(key, default)
+        group = super().get(key, default)
         if group is default:
             return default
         return DefaultPreferenceGroup(group, self.provider).__bind__(self)

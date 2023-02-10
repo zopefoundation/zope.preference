@@ -60,7 +60,7 @@ and the id, schema and title of the group are directly available:
   >>> settings.__schema__
   <InterfaceClass zope.preference.README.IZMIUserSettings>
   >>> settings.__title__
-  u'ZMI User Settings'
+  'ZMI User Settings'
 
 So let's ask the preference group for the `skin` setting:
 
@@ -277,7 +277,7 @@ values from parent sites. So if we add a new child folder called
 ``folder1``, make it a site and set it as the active site:
 
   >>> from zope.site.folder import Folder
-  >>> root[u'folder1'] = Folder()
+  >>> root['folder1'] = Folder()
   >>> folder1 = root['folder1']
 
   >>> from zope.site.site import LocalSiteManager
@@ -408,7 +408,7 @@ Let's register the ZMI settings again under a new name via ZCML:
   <zope.preference.preference.PreferenceGroup object at ...>
 
   >>> prefs.ZMISettings2.__title__
-  u'ZMI Settings NG'
+  'ZMI Settings NG'
 
   >>> IZMIUserSettings.providedBy(prefs.ZMISettings2)
   True
@@ -434,7 +434,7 @@ And the tree can built again by carefully constructing the id:
   <zope.preference.preference.PreferenceGroup object at ...>
 
   >>> prefs.ZMISettings2.Folder.__title__
-  u'Folder Settings'
+  'Folder Settings'
 
   >>> IFolderSettings.providedBy(prefs.ZMISettings2.Folder)
   True

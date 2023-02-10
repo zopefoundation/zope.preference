@@ -15,24 +15,15 @@
 """
 import doctest
 import unittest
-import re
+
 import zope.component.hooks
 import zope.component.testing
 import zope.testing.module
-
-from zope import component
 from zope.interface.verify import verifyObject
 from zope.testing import cleanup
-from zope.testing import renormalizing
 
+from zope import component
 from zope.preference.interfaces import IPreferenceGroup
-
-
-checker = renormalizing.RENormalizing([
-    # Python 3 unicode removed the "u".
-    (re.compile("u('.*?')"), r"\1"),
-    (re.compile('u(".*?")'), r"\1"),
-])
 
 
 def addUtility(sitemanager, utility, iface=None, name='', suffix=''):
@@ -49,18 +40,18 @@ def setUp(test):
     zope.component.hooks.setHooks()
 
     # Traversal
-    from zope.traversing.testing import setUp as traversalSetUp
-    from zope.traversing.interfaces import ITraversable
     from zope.container.interfaces import ISimpleReadContainer
     from zope.container.traversal import ContainerTraversable
+    from zope.traversing.interfaces import ITraversable
+    from zope.traversing.testing import setUp as traversalSetUp
     traversalSetUp()
     zope.component.provideAdapter(ContainerTraversable,
                                   (ISimpleReadContainer,), ITraversable)
 
     # ISiteManager lookup
-    from zope.site.site import SiteManagerAdapter
-    from zope.interface.interfaces import IComponentLookup
     from zope.interface import Interface
+    from zope.interface.interfaces import IComponentLookup
+    from zope.site.site import SiteManagerAdapter
     zope.component.provideAdapter(SiteManagerAdapter, (Interface,),
                                   IComponentLookup)
 
@@ -80,9 +71,10 @@ class TestConfiguration(cleanup.CleanUp,
                         unittest.TestCase):
 
     def test_configure(self):
-        from zope.preference.default import DefaultPreferenceProvider
-        from zope.preference.default import DefaultPreferenceGroup
         from zope.configuration import xmlconfig
+
+        from zope.preference.default import DefaultPreferenceGroup
+        from zope.preference.default import DefaultPreferenceProvider
 
         xmlconfig.string("""
         <configure xmlns="http://namespaces.zope.org/zope">
@@ -106,9 +98,7 @@ def test_suite():
         setUp=setUp, tearDown=tearDown,
         optionflags=(doctest.NORMALIZE_WHITESPACE
                      | doctest.ELLIPSIS
-                     | doctest.IGNORE_EXCEPTION_DETAIL
-                     | renormalizing.IGNORE_EXCEPTION_MODULE_IN_PYTHON2),
-        checker=checker)
+                     | doctest.IGNORE_EXCEPTION_DETAIL))
     return unittest.TestSuite((
         readme,
         unittest.defaultTestLoader.loadTestsFromName(__name__),
