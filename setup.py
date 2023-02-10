@@ -32,7 +32,7 @@ tests_require = [
 ]
 
 setup(name='zope.preference',
-      version='5.0',
+      version='5.1.dev0',
       author='Zope Foundation and Contributors',
       author_email='zope-dev@zope.dev',
       description='User Preferences Framework',
